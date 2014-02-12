@@ -25,7 +25,6 @@
 
 PackageRef *packageref_new(void) {
         PackageRef *m;
-        //int r;
 
         m = new0(PackageRef, 1);
         if (!m)
@@ -42,8 +41,6 @@ PackageRef *packageref_new(void) {
 }
 
 void packageref_free(PackageRef *m) {
-        //PackageRef *entry;
-
         if (m->name != NULL)
         {
                 free(m->name);

@@ -86,88 +86,6 @@ static int manager_connect_bus(PackageManager *m) {
                 return r;
         }
 
-        /*
-
-        TODO What does this do?
-
-        r = sd_bus_add_fallback_vtable(m->bus, "/org/freedesktop/machine1/machine", "org.freedesktop.machine1.Machine", machine_vtable, machine_object_find, m);
-        if (r < 0) {
-                log_error("Failed to add machine object vtable: %s", strerror(-r));
-                return r;
-        }
-
-        r = sd_bus_add_node_enumerator(m->bus, "/org/freedesktop/machine1/machine", machine_node_enumerator, m);
-        if (r < 0) {
-                log_error("Failed to add machine enumerator: %s", strerror(-r));
-                return r;
-        }
-
-        r = sd_bus_add_match(m->bus,
-                             "type='signal',"
-                             "sender='org.freedesktop.systemd1',"
-                             "interface='org.freedesktop.systemd1.Manager',"
-                             "member='JobRemoved',"
-                             "path='/org/freedesktop/systemd1'",
-                             match_job_removed,
-                             m);
-        if (r < 0) {
-                log_error("Failed to add match for JobRemoved: %s", strerror(-r));
-                return r;
-        }
-
-        r = sd_bus_add_match(m->bus,
-                             "type='signal',"
-                             "sender='org.freedesktop.systemd1',"
-                             "interface='org.freedesktop.systemd1.Manager',"
-                             "member='UnitRemoved',"
-                             "path='/org/freedesktop/systemd1'",
-                             match_unit_removed,
-                             m);
-        if (r < 0) {
-                log_error("Failed to add match for UnitRemoved: %s", strerror(-r));
-                return r;
-        }
-
-        r = sd_bus_add_match(m->bus,
-                             "type='signal',"
-                             "sender='org.freedesktop.systemd1',"
-                             "interface='org.freedesktop.DBus.Properties',"
-                             "member='PropertiesChanged'",
-                             match_properties_changed,
-                             m);
-        if (r < 0) {
-                log_error("Failed to add match for PropertiesChanged: %s", strerror(-r));
-                return r;
-        }
-
-        r = sd_bus_add_match(m->bus,
-                             "type='signal',"
-                             "sender='org.freedesktop.systemd1',"
-                             "interface='org.freedesktop.systemd1.Manager',"
-                             "member='Reloading',"
-                             "path='/org/freedesktop/systemd1'",
-                             match_reloading,
-                             m);
-        if (r < 0) {
-                log_error("Failed to add match for Reloading: %s", strerror(-r));
-                return r;
-        }
-
-        r = sd_bus_call_method(
-                        m->bus,
-                        "org.freedesktop.systemd1",
-                        "/org/freedesktop/systemd1",
-                        "org.freedesktop.systemd1.Manager",
-                        "Subscribe",
-                        &error,
-                        NULL, NULL);
-        if (r < 0) {
-                log_error("Failed to enable subscription: %s", bus_error_message(&error, r));
-                return r;
-        }
-
-        */
-
         r = sd_bus_request_name(m->bus, "org.freedesktop.package1", 0);
         if (r < 0) {
                 log_error("Failed to register name: %s", strerror(-r));
@@ -184,8 +102,6 @@ static int manager_connect_bus(PackageManager *m) {
 }
 
 int manager_startup(PackageManager *m) {
-        //PackageRef *entry;
-        //Iterator i;
         int r;
 
         /* Connect to the bus */
@@ -199,8 +115,6 @@ int manager_startup(PackageManager *m) {
 }
 
 static bool check_idle(void* userdata) {
-        //PackageManager *m = userdata;
-
         /* TODO: GC */
 
         return false;

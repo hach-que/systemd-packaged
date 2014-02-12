@@ -36,8 +36,6 @@ static int method_get_package(sd_bus *bus, sd_bus_message *message, void *userda
         const char *name;
         int r;
 
-        printf("got message\n");
-
         assert(bus);
         assert(message);
         assert(m);
@@ -49,6 +47,7 @@ static int method_get_package(sd_bus *bus, sd_bus_message *message, void *userda
         package = hashmap_get(m->packages, name);
         if (!package)
                 return sd_bus_error_setf(error, BUS_ERROR_NO_SUCH_MACHINE, "No package '%s' known", name);
+
 
         // TODO: Something useful with that.
 
