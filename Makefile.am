@@ -3926,6 +3926,33 @@ lib_LTLIBRARIES += \
 endif
 
 # ------------------------------------------------------------------------------
+#if ENABLE_PACKAGED
+systemd_packaged_SOURCES = \
+    src/package/packagemanager.c \
+    src/package/packagemanager.h \
+    src/package/packageref.c \
+    src/package/packageref.h \
+    src/package/packaged.c \
+    src/package/packaged-dbus.c \
+    src/package/packaged.h
+
+systemd_packaged_LDADD = \
+	libsystemd-internal.la \
+	libsystemd-daemon-internal.la \
+	libsystemd-shared.la
+
+rootbin_PROGRAMS += \
+    systemd-packaged
+
+# - systemd_packagectl_SOURCES = \
+#    src/package/packagectl.c
+#    src/package/packagectl.h
+
+# - bin_PROGRAMS += \
+#    packagectl
+#endif
+
+# ------------------------------------------------------------------------------
 if ENABLE_MACHINED
 systemd_machined_SOURCES = \
 	src/machine/machined.c \
