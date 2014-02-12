@@ -62,6 +62,10 @@ AC_PROG_AWK
 
 AC_PROG_CC_C99
 
+# temporary for libpackage-fs
+CXXFLAGS="$CXXFLAGS -std=c++11"
+AC_PROG_CXX
+
 AC_PATH_PROG([M4], [m4])
 AC_PATH_PROG([XSLTPROC], [xsltproc])
 

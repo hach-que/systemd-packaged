@@ -3927,22 +3927,61 @@ endif
 
 # ------------------------------------------------------------------------------
 #if ENABLE_PACKAGED
+noinst_LTLIBRARIES += \
+	libpackage-fs.la
+
+libpackage_fs_la_SOURCES = \
+	src/package-fs/config.h \
+	src/package-fs/environment.cpp \
+	src/package-fs/environment.h \
+	src/package-fs/fs.cpp \
+	src/package-fs/fsfile.cpp \
+	src/package-fs/fs.h \
+	src/package-fs/logging.cpp \
+	src/package-fs/logging.h \
+	src/package-fs/ppnarg.h \
+	src/package-fs/exception/fs.cpp \
+	src/package-fs/exception/fs.h \
+	src/package-fs/exception/package.cpp \
+	src/package-fs/exception/package.h \
+	src/package-fs/exception/util.cpp \
+	src/package-fs/exception/util.h \
+	src/package-fs/internal/fuselink.cpp \
+	src/package-fs/internal/fuselink.h \
+	src/package-fs/lowlevel/blockstream.cpp \
+	src/package-fs/lowlevel/blockstream.h \
+	src/package-fs/lowlevel/endian.cpp \
+	src/package-fs/lowlevel/endian.h \
+	src/package-fs/lowlevel/freelist.cpp \
+	src/package-fs/lowlevel/freelist.h \
+	src/package-fs/lowlevel/fs.cpp \
+	src/package-fs/lowlevel/fs.h \
+	src/package-fs/lowlevel/fsresult.h \
+	src/package-fs/lowlevel/inode.cpp \
+	src/package-fs/lowlevel/inode.h \
+	src/package-fs/lowlevel/inodetype.h \
+	src/package-fs/lowlevel/util.cpp \
+	src/package-fs/lowlevel/util.h \
+	src/package-fs/packagefs.c \
+	src/package-fs/packagefs.h
+
 systemd_packaged_SOURCES = \
-    src/package/packagemanager.c \
-    src/package/packagemanager.h \
-    src/package/packageref.c \
-    src/package/packageref.h \
-    src/package/packaged.c \
-    src/package/packaged-dbus.c \
-    src/package/packaged.h
+	src/package/packagemanager.c \
+	src/package/packagemanager.h \
+	src/package/packageref.c \
+	src/package/packageref.h \
+	src/package/packaged.c \
+	src/package/packaged-dbus.c \
+	src/package/packaged.h
 
 systemd_packaged_LDADD = \
+	libpackage-fs.la \
 	libsystemd-internal.la \
 	libsystemd-daemon-internal.la \
 	libsystemd-shared.la
 
 rootbin_PROGRAMS += \
-    systemd-packaged
+	systemd-packaged
 
 # - systemd_packagectl_SOURCES = \
 #    src/package/packagectl.c
