@@ -58,7 +58,7 @@ static int method_get_package(sd_bus *bus, sd_bus_message *message, void *userda
                 return -ENOMEM;
         */
 
-        return sd_bus_reply_method_return(message, "o", name);
+        return sd_bus_reply_method_return(message, "s", name);
 }
 
 const sd_bus_vtable manager_vtable[] = {
