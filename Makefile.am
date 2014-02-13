@@ -3980,8 +3980,26 @@ systemd_packaged_LDADD = \
 	libsystemd-daemon-internal.la \
 	libsystemd-shared.la
 
+systemd_packaged_LDFLAGS = \
+	-lstdc++ \
+	-lc \
+	-lm
+
+systemd_packagemount_SOURCES = \
+	src/package-mount/appmount.cpp
+
+systemd_packagemount_LDADD = \
+	libpackage-fs.la
+
+systemd_packagemount_LDFLAGS = \
+	-lstdc++ \
+	-lc \
+	-lm \
+	-lfuse
+
 rootbin_PROGRAMS += \
-	systemd-packaged
+	systemd-packaged \
+	systemd-packagemount
 
 # - systemd_packagectl_SOURCES = \
 #    src/package/packagectl.c

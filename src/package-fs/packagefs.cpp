@@ -19,29 +19,41 @@
   along with systemd; If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include "packagefs.h"
+#include <stdlib.h>
 
-#include "util.h"
+#include "packagefs.h"
+#include "fs.h"
+#include "lowlevel/util.h"
 
 extern "C" PackageFS *packagefs_new(const char *path) {
         PackageFS *packagefs;
 
-        packagefs = new0(PackageFS, 1);
+        packagefs = (PackageFS*)malloc(sizeof(PackageFS));
         if (!packagefs)
         {
-                return NULL;
+                return (PackageFS*)0;
         }
 
-        return packagefs;
+        if (!AppLib::LowLevel::Util::createPackage(
+                path,
+                "",
+                "",
+                "",
+                ""))
+        {
+                return (PackageFS*)0;
+        }
+
+        return packagefs_open(path);
 }
 
 extern "C" PackageFS *packagefs_open(const char *path) {
         PackageFS *packagefs;
 
-        packagefs = new0(PackageFS, 1);
+        packagefs = (PackageFS*)malloc(sizeof(PackageFS));
         if (!packagefs)
         {
-                return NULL;
+                return (PackageFS*)0;
         }
 
         return packagefs;

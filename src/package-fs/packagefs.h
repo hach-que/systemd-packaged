@@ -21,6 +21,10 @@
   along with systemd; If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct PackageFS PackageFS;
 
 struct PackageFS {
@@ -31,3 +35,7 @@ PackageFS *packagefs_new(const char *path);
 PackageFS *packagefs_open(const char *path);
 
 void packagefs_close(PackageFS *packagefs);
+
+#ifdef __cplusplus
+}
+#endif

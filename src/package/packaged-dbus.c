@@ -28,6 +28,7 @@
 
 #include "packagemanager.h"
 #include "packageref.h"
+#include "../package-fs/packagefs.h"
 
 static int method_get_package(sd_bus *bus, sd_bus_message *message, void *userdata, sd_bus_error *error) {
         _cleanup_free_ char *p = NULL;
@@ -97,7 +98,7 @@ static int method_load_package(sd_bus *bus, sd_bus_message *message, void *userd
         if (r < 0)
                 return r;
 
-        pkgfs = packagefs_load(path);
+        pkgfs = packagefs_open(path);
 
         packagefs_close(pkgfs);
 
