@@ -3962,7 +3962,7 @@ libpackage_fs_la_SOURCES = \
 	src/package-fs/lowlevel/inodetype.h \
 	src/package-fs/lowlevel/util.cpp \
 	src/package-fs/lowlevel/util.h \
-	src/package-fs/packagefs.c \
+	src/package-fs/packagefs.cpp \
 	src/package-fs/packagefs.h
 
 systemd_packaged_SOURCES = \

@@ -60,8 +60,54 @@ static int method_get_package(sd_bus *bus, sd_bus_message *message, void *userda
         return sd_bus_reply_method_return(message, "s", name);
 }
 
+static int method_create_package(sd_bus *bus, sd_bus_message *message, void *userdata, sd_bus_error *error) {
+        _cleanup_free_ char *p = NULL;
+        PackageManager *m = userdata;
+        PackageFS *pkgfs;
+        const char *path;
+        int r;
+
+        assert(bus);
+        assert(message);
+        assert(m);
+
+        r = sd_bus_message_read(message, "s", &path);
+        if (r < 0)
+                return r;
+
+        pkgfs = packagefs_new(path);
+
+        packagefs_close(pkgfs);
+
+        return sd_bus_reply_method_return(message, "s", "Created Package");
+}
+
+static int method_load_package(sd_bus *bus, sd_bus_message *message, void *userdata, sd_bus_error *error) {
+        _cleanup_free_ char *p = NULL;
+        PackageManager *m = userdata;
+        PackageFS *pkgfs;
+        const char *path;
+        int r;
+
+        assert(bus);
+        assert(message);
+        assert(m);
+
+        r = sd_bus_message_read(message, "s", &path);
+        if (r < 0)
+                return r;
+
+        pkgfs = packagefs_load(path);
+
+        packagefs_close(pkgfs);
+
+        return sd_bus_reply_method_return(message, "s", "Loaded Package");
+}
+
 const sd_bus_vtable manager_vtable[] = {
         SD_BUS_VTABLE_START(0),
         SD_BUS_METHOD("GetPackage", "s", "s", method_get_package, SD_BUS_VTABLE_UNPRIVILEGED),
+        SD_BUS_METHOD("CreatePackage", "s", "s", method_create_package, SD_BUS_VTABLE_UNPRIVILEGED),
+        SD_BUS_METHOD("LoadPackage", "s", "s", method_load_package, SD_BUS_VTABLE_UNPRIVILEGED),
         SD_BUS_VTABLE_END
 };

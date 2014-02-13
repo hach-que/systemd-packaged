@@ -23,7 +23,7 @@
 
 #include "util.h"
 
-PackageFS *packagefs_new(const char *path) {
+extern "C" PackageFS *packagefs_new(const char *path) {
         PackageFS *packagefs;
 
         packagefs = new0(PackageFS, 1);
@@ -35,7 +35,7 @@ PackageFS *packagefs_new(const char *path) {
         return packagefs;
 }
 
-PackageFS *packagefs_open(const char *path) {
+extern "C" PackageFS *packagefs_open(const char *path) {
         PackageFS *packagefs;
 
         packagefs = new0(PackageFS, 1);
@@ -47,6 +47,6 @@ PackageFS *packagefs_open(const char *path) {
         return packagefs;
 }
 
-void packagefs_close(PackageFS *packagefs) {
+extern "C" void packagefs_close(PackageFS *packagefs) {
         free(packagefs);
 }
