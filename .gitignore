@@ -84,6 +84,8 @@
 /systemd-networkd
 /systemd-notify
 /systemd-nspawn
+/systemd-packaged
+/systemd-packagemount
 /systemd-quotacheck
 /systemd-random-seed
 /systemd-rc-local-generator
