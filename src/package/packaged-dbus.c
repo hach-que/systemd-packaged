@@ -49,7 +49,6 @@ static int method_get_package(sd_bus *bus, sd_bus_message *message, void *userda
         if (!package)
                 return sd_bus_error_setf(error, BUS_ERROR_NO_SUCH_MACHINE, "No package '%s' known", name);
 
-
         // TODO: Something useful with that.
 
         /*
@@ -89,6 +88,7 @@ static int method_load_package(sd_bus *bus, sd_bus_message *message, void *userd
         PackageFS *pkgfs;
         const char *path;
         int r;
+        struct stat stbuf;
 
         assert(bus);
         assert(message);
@@ -100,15 +100,17 @@ static int method_load_package(sd_bus *bus, sd_bus_message *message, void *userd
 
         pkgfs = packagefs_open(path);
 
+        packagefs_readdir(pkgfs, "/");
+
         packagefs_close(pkgfs);
 
-        return sd_bus_reply_method_return(message, "s", "Loaded Package");
+        return sd_bus_reply_method_return(message, "i", stbuf.st_ino);
 }
 
 const sd_bus_vtable manager_vtable[] = {
         SD_BUS_VTABLE_START(0),
         SD_BUS_METHOD("GetPackage", "s", "s", method_get_package, SD_BUS_VTABLE_UNPRIVILEGED),
         SD_BUS_METHOD("CreatePackage", "s", "s", method_create_package, SD_BUS_VTABLE_UNPRIVILEGED),
-        SD_BUS_METHOD("LoadPackage", "s", "s", method_load_package, SD_BUS_VTABLE_UNPRIVILEGED),
+        SD_BUS_METHOD("LoadPackage", "s", "i", method_load_package, SD_BUS_VTABLE_UNPRIVILEGED),
         SD_BUS_VTABLE_END
 };

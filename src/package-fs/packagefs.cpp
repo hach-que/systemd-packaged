@@ -56,9 +56,46 @@ extern "C" PackageFS *packagefs_open(const char *path) {
                 return (PackageFS*)0;
         }
 
+        // TODO: uid / gid?
+        packagefs->fs = new AppLib::FS(path, 0, 0);
+
         return packagefs;
 }
 
+extern "C" void packagefs_getattr(
+        PackageFS *packagefs,
+        const char* path,
+        struct stat* stbufOut)
+{
+        if (packagefs == (PackageFS*)0)
+        {
+                ((AppLib::FS*)packagefs->fs)->getattr(
+                        std::string(path),
+                        *stbufOut);
+        }
+}
+
+extern "C" void packagefs_readdir(
+        PackageFS *packagefs,
+        const char* path)
+{
+        if (packagefs == (PackageFS*)0)
+        {
+                std::vector<std::string> entries = ((AppLib::FS*)packagefs->fs)->readdir(std::string(path));
+
+                for (int i = 0; i < entries.size(); i++)
+                {
+                        printf("%s", entries[i].c_str());
+                }
+        }
+}
+
 extern "C" void packagefs_close(PackageFS *packagefs) {
+        if (packagefs == (PackageFS*)0)
+        {
+                return;
+        }
+
+        delete (AppLib::FS*)(packagefs->fs);
         free(packagefs);
 }

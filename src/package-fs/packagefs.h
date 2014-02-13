@@ -34,6 +34,15 @@ struct PackageFS {
 PackageFS *packagefs_new(const char *path);
 PackageFS *packagefs_open(const char *path);
 
+void packagefs_getattr(
+        PackageFS *packagefs,
+        const char* path,
+        struct stat* stbufOut);
+
+void packagefs_readdir(
+        PackageFS *packagefs,
+        const char* path);
+
 void packagefs_close(PackageFS *packagefs);
 
 #ifdef __cplusplus
